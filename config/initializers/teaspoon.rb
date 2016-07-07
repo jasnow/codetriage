@@ -1,4 +1,4 @@
-Teaspoon.setup do |config|
+Teaspoon.configure do |config|
 
   # This determines where the Teaspoon routes will be mounted. Changing this to "/jasmine" would allow you to browse to
   # http://localhost:3000/jasmine to run your specs.
@@ -14,7 +14,7 @@ Teaspoon.setup do |config|
 
   # Fixtures are rendered through a standard controller. This means you can use things like HAML or RABL/JBuilder, etc.
   # to generate fixtures within this path.
-  config.fixture_path = "test/javascript/fixtures"
+  config.fixture_paths += [ "test/javascript/fixtures" ]
 
   # You can modify the default suite configuration and create new suites here. Suites can be isolated from one another.
   # When defining a suite you can provide a name and a block. If the name is left blank, :default is assumed. You can
@@ -50,9 +50,11 @@ Teaspoon.setup do |config|
 
     # When running coverage reports, you probably want to exclude libraries that you're not testing.
     # Accepts an array of filenames or regular expressions. The default is to exclude assets from vendors or gems.
-    suite.no_coverage = [%r{/lib/ruby/gems/}, %r{/vendor/assets/}, %r{/support/}, %r{/(.+)_helper.}]
-    # suite.no_coverage << "jquery.min.js" # excludes jquery from coverage reports
 
+    config.coverage do |coverage|
+      coverage.ignore += [%r{/lib/ruby/gems/}, %r{/vendor/assets/}, %r{/support/}, %r{/(.+)_helper.}]
+end
+      # suite.no_coverage << "jquery.min.js" # excludes jquery from coverage reports
   end
 
   # Example suite. Since we're just filtering to files already within the root test/javascripts, these files will also
